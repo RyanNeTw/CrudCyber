@@ -1,0 +1,7 @@
+
+<form action="{{ path('update_blog', {'slug': blog.slug}) }}" method="post">
+    <input type="text" name="name" value="{{ blog.name }}" placeholder="Nom du blog" required>
+    <input type="text" name="author" value="{{ blog.author }}" placeholder="Auteur" required>
+    <input type="number" name="rate" value="{{ blog.rate }}" placeholder="Note" required>
+    <button type="submit">Mettre à jour</button>
+</form>

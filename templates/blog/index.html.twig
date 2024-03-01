@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {% if app.user %}
+        <h1>Welcome {{ app.user.email}}✅</h1>
+        <a href="{{ path('app_logout')}}" >Lgout</a>
+    {% else %}
+        <a href="{{ path('app_login')}}" >Login</a>
+        <a href="{{ path('app_register')}}" >Register</a>
+    {% endif %}
+
+    {{ dump(app.user) }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('create_blog')}}" >Create Blog</a>
+    {% endif %}
+
+    <ul>
+    {% for blog in blogs %}
+        <li>
+            <h3>{{ blog.name }}</h3>
+            <div>
+                <h4>{{blog.author}}</h4>
+                <h4>{{blog.rate}}</h4>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('update_blog', {'slug': blog.slug}) }}" >Update</a>
+                    <a href="{{ path('delete_blog', {'slug': blog.slug}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce blog ?');">Supprimer</a>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
